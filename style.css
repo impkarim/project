@@ -4,11 +4,11 @@
 :root {
     /* الوضع الفاتح الافتراضي */
     --primary-color: #3F51B5;      /* Indigo */
-    --secondary-color: #FBC02D;    /* Amber */
-    --background-light: #F4F7F9;    /* Light Background */
-    --card-background: #FFFFFF;    /* Card & Modal Background */
+    --secondary-color: #76a0f0;    /* Amber */
+    --background-light: #b3b1b1;    /* Light Background */
+    --card-background: #c0bfbfc0;    /* Card & Modal Background */
     --text-dark: #2C3E50;          /* Primary Text */
-    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft Shadow */
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.39); /* Soft Shadow */
     --footer-height: 50px; 
     --header-background: var(--card-background);
     --table-header-bg: #E8EAF6; /* Light Indigo for table header */
@@ -24,13 +24,13 @@
 body.dark-mode {
     --primary-color: #9FA8DA;      /* Light Indigo */
     --secondary-color: #FFC107;    /* Amber */
-    --background-light: #1E272E;    /* Dark Background */
-    --card-background: #2D3A44;    /* Dark Card */
-    --text-dark: #ECEFF1;          /* Light Text */
-    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --background-light: #181c1f;    /* Dark Background */
+    --card-background: #1b1d1f;    /* Dark Card */
+    --text-dark: #ffffff;          /* Light Text */
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.712);
     --header-background: var(--card-background);
     --table-header-bg: #455A64; /* Darker Blue-Grey */
-    --border-color: #455A64;
+    --border-color: #616445;
 
     --edit-text-color: var(--text-dark); /* Ensure text on Amber button is readable */
 }
@@ -239,6 +239,10 @@ main {
     font-weight: 700;
     white-space: nowrap;
 }
+body.dark-mode .action-btn {
+    color: rgb(70, 66, 66);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
 
 .action-btn:hover {
     background-color: #303F9F;
@@ -249,14 +253,6 @@ body.dark-mode .action-btn:hover:not(.theme-toggle) {
     filter: brightness(1.2); 
 }
 
-/* تنسيق زر الطباعة */
-.print-btn {
-    background-color: #7986cb; 
-    color: white;
-}
-.print-btn:hover {
-    background-color: #5c6bc0;
-}
 
 
 /* --- الجدول الرئيسي --- */
@@ -504,6 +500,7 @@ td:last-child {
 }
 
 #caseForm input, #caseForm select, #caseForm textarea {
+    resize: none;
     width: 100%; 
     padding: 12px; 
     margin-bottom: 15px; 
@@ -575,13 +572,13 @@ footer.fixed-footer {
     font-weight: 700;              
     padding: 3px 8px;
     border-radius: 4px;
-    background-color: rgba(251, 192, 45, 0.1); 
+    background-color: rgba(97, 105, 163, 0.74); 
     transition: color 0.3s, background-color 0.3s;
 }
 
 body.dark-mode .designer-name {
     color: var(--secondary-color); 
-    background-color: rgba(255, 193, 7, 0.2); 
+    background-color: rgba(255, 193, 7, 0.329); 
 }
 
 
@@ -873,5 +870,167 @@ body.dark-mode .designer-name {
     .form-group input, .form-group select, .form-group textarea {
         width: 100%;
         box-sizing: border-box;
+    }
+}
+/* -------------------------------------------------- */
+/* 9. تنسيقات لوحة الإحصائيات (Statistics Dashboard) */
+/* -------------------------------------------------- */
+
+.statistics-dashboard {
+    display: grid;
+    /* تخطيط مرن يتكيف مع الشاشات: 4 أعمدة في الشاشات الكبيرة */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 15px;
+    
+    border-radius: 12px;
+}
+
+
+.stat-card {
+    background-color: var(--card-background, #FFFFFF); 
+    color: var(--text-dark, #2C3E50);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: right; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-right: 5px solid var(--primary-color, #3F51B5); 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+body.dark-mode .stat-card {
+    background-color: #242629; 
+    border-right-color: var(--primary-color, #9FA8DA);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card i {
+    font-size: 2.5em;
+    color: var(--primary-color, #3F51B5);
+    margin-bottom: 10px;
+    float: left; 
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9em;
+    color: #6c757d; 
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+body.dark-mode .stat-label {
+    color: #a0a0a0;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--text-dark, #2C3E50);
+}
+
+body.dark-mode .stat-value {
+    color: #F4F7F9;
+}
+
+/* تخصيص ألوان الأيقونات حسب البطاقة */
+.stat-card.total-cases i {
+    color: var(--primary-color, #3F51B5); 
+}
+.stat-card.active-cases i {
+    color: #4CAF50; /* Green */
+}
+.stat-card.pending-cases i {
+    color: #FF9800; /* Orange/Amber */
+}
+.stat-card.paid-cases i {
+    color: #2196F3; /* Blue */
+}
+
+/* -------------------------------------------------- */
+/* 10. تعديلات استجابة الوسائط (Media Queries) */
+/* -------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .statistics-dashboard {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+        padding: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .statistics-dashboard {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* -------------------------------------------------- */
+/* 9. تنسيقات لوحة الإحصائيات (Statistics Dashboard) */
+/* -
+------------------------------------------------- */
+
+.statistics-dashboard {
+    /* ... الخصائص الأصلية ... */
+    
+    /* 🚨 التعديلات المطلوبة: */
+    max-height: 0; /* لضمان الإخفاء الافتراضي */
+    overflow: hidden; /* لإخفاء المحتوى الزائد أثناء الانزلاق */
+    opacity: 0; /* للإخفاء التام قبل الظهور */
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease; /* تأثير الانتقال الناعم */
+
+    /* ... باقي الخصائص الأصلية ... */
+}
+
+/* 🚨 الإضافة المطلوبة: الفئة التي ستُضاف بواسطة JavaScript لإظهار اللوحة */
+.statistics-dashboard.visible {
+    max-height: 500px; /* يجب أن تكون أكبر من ارتفاع المحتوى لضمان ظهور كل شيء */
+    opacity: 1;
+    padding: 15px; /* تأكد من أن التعبئة (padding) تظهر عند الظهور */
+}
+
+
+/* -------------------------------------------------- */
+/* 11. استجابة الهواتف (Media Queries) - تعديل شريط الإجراءات */
+/* -------------------------------------------------- */
+
+@media (max-width: 768px) {
+    /* 🚨 التعديل الأساسي: وضع جميع العناصر في عمود واحد */
+    .action-bar {
+        flex-wrap: wrap;
+        justify-content: flex-start; /* ترتيب العناصر عموديًا */
+        align-items: center;
+        gap: 10px; /* تقليل التباعد قليلاً */
+        padding: 5px 0;
+    }
+    
+    /* توسيع الأزرار لملء العرض */
+    .action-bar .action-btn {
+        width: 100%;
+        text-align: center; /* توسيط النص داخل الزر */
+        /* إزالة الهوامش الخاصة التي قد تعرقل التوسيع */
+        margin-right: 0 !important; 
+    }
+
+    /* توسيع مجموعة البحث والفرز */
+    .search-sort-group {
+        width: 100%;
+        flex-direction: column; /* وضع حقل البحث والقائمة المنسدلة عموديًا */
+        gap: 10px;
+    }
+
+    /* توسيع حقل البحث والقائمة المنسدلة */
+    .search-input,
+    .sort-select {
+        width: 100%; /* ملء العرض بالكامل */
     }
 }
