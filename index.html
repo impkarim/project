@@ -27,9 +27,37 @@
     </header>
 
     <main>
+                <div class="action-bar">
+            <button id="toggleStatsBtn" class="action-btn view-btn"><i class="fas fa-chart-bar"></i> عرض/إخفاء الإحصائيات</button> 
+            <div class="search-sort-group">
+
+<section id="statistics-dashboard" class="statistics-dashboard">
+            <div class="stat-card total-cases">
+                <i class="fas fa-balance-scale"></i>
+                <span class="stat-label">إجمالي القضايا (جميعها)</span>
+                <span class="stat-value" id="totalCasesStat">0</span> 
+            </div>
+            <div class="stat-card active-cases">
+                <i class="fas fa-folder-open"></i>
+                <span class="stat-label">القضايا النشطة (غير مؤرشفة)</span>
+                <span class="stat-value" id="activeCasesStat">0</span>
+            </div>
+            <div class="stat-card pending-cases">
+                <i class="fas fa-clock"></i>
+                <span class="stat-label">قضايا بانتظار جلسة</span>
+                <span class="stat-value" id="pendingSessionStat">0</span>
+            </div>
+            <div class="stat-card paid-cases">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span class="stat-label">قضايا مدفوعة الرسوم</span>
+                <span class="stat-value" id="paidPaymentStat">0</span>
+            </div>
+        </section>
+
+
         <div class="controls">
             <input type="text" id="searchInput" placeholder="بحث برقم القضية، الموكل، أو الموضوع..." oninput="searchCases()">
-            <button onclick="printReport()" class="action-btn print-btn">🖨️ طباعة التقرير</button>
+            <button onclick="printReport()" class="action-btn add-btn">🖨️ طباعة التقرير</button>
             <button onclick="addNewCase()" class="action-btn add-btn">إضافة قضية جديدة</button>
         </div>
 
