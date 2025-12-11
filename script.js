@@ -15,6 +15,8 @@ const caseDetailsPopover = document.getElementById('caseDetailsPopover');
 const themeToggle = document.getElementById('themeToggle'); 
 const body = document.body;
 const noCasesMessage = document.getElementById('noCasesMessage'); 
+const statsDashboard = document.getElementById('statistics-dashboard');
+const toggleStatsBtn = document.getElementById('toggleStatsBtn');
 
 
 // ----------------------------------------------------
@@ -347,6 +349,9 @@ caseForm.addEventListener('submit', async function(event) {
     closeModal();
     await loadCasesData(); // جلب البيانات الجديدة
     renderCases(casesData); 
+    if (document.body.id === 'pageIndex') {
+        calculateAndRenderStatistics();
+        }
 });
 
 
@@ -361,6 +366,11 @@ async function deleteCase(id) {
             // إعادة تحميل وعرض البيانات المحدثة
             await loadCasesData();
             renderCases(casesData);
+
+            if (document.body.id === 'pageIndex') {
+
+                calculateAndRenderStatistics();
+                }
         } catch (error) {
             console.error("خطأ في حذف البيانات من Firebase:", error);
             alert("فشل في حذف البيانات. تأكد من صلاحيات Firebase.");
@@ -390,6 +400,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // تحميل وعرض البيانات من Firebase
     await loadCasesData(); 
     renderCases(casesData); 
+
+    if (document.body.id === 'pageIndex') {
+        calculateAndRenderStatistics();
+        }
     
     // *** بدء تحديث التاريخ والأذكار ***
     updateDateAndTime(); 
@@ -397,4 +411,48 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     updateTasbeeh(); 
     setInterval(updateTasbeeh, 15000); 
+
+    toggleStatsBtn?.addEventListener('click', () => {
+
+        statsDashboard.classList.toggle('visible');
+        const isVisible = statsDashboard.classList.contains('visible');
+        const icon = toggleStatsBtn.querySelector('i');
+        toggleStatsBtn.textContent = isVisible ? ' إخفاء الإحصائيات' : ' عرض الإحصائيات';
+        icon.className = isVisible ? 'fas fa-eye-slash' : 'fas fa-chart-bar';
+        icon.className = newIconClass;
+        toggleStatsBtn.innerHTML = `<i class="${newIconClass}"></i> ${newText}`;
+        }
+        );
 });
+
+// ----------------------------------------------------
+// 7. حساب وعرض الإحصائيات (ميزة جديدة)
+// ----------------------------------------------------
+function calculateAndRenderStatistics() {
+    // الأهمية: التأكد من أننا في الصفحة الرئيسية (index.html) قبل محاولة التحديث
+    const totalCasesStat = document.getElementById('totalCasesStat');
+    if (!totalCasesStat || document.body.id !== 'pageIndex') {
+        return; 
+    }
+
+    // القضايا غير المنتهية: active و pending
+    const nonClosedCases = casesData.filter(c => c.status !== 'closed');
+    
+    // 1. إجمالي القضايا (كل السجلات)
+    const totalCasesCount = casesData.length;
+    
+    // 2. القضايا النشطة (غير المنتهية)
+    const activeCasesCount = nonClosedCases.length;
+
+    // 3. قضايا مؤجلة/انتظار (حالة 'pending')
+    const pendingSessionCasesCount = nonClosedCases.filter(c => c.status === 'pending').length;
+
+    // 4. قضايا سُددت بالكامل (حالة 'fully_paid')
+    const fullyPaidCasesCount = casesData.filter(c => c.paymentStatus === 'fully_paid').length;
+    
+    // تحديث الواجهة بالعناصر المحسوبة
+    totalCasesStat.textContent = totalCasesCount;
+    document.getElementById('activeCasesStat').textContent = activeCasesCount;
+    document.getElementById('pendingSessionStat').textContent = pendingSessionCasesCount;
+    document.getElementById('paidPaymentStat').textContent = fullyPaidCasesCount;
+}
