@@ -1,0 +1,877 @@
+/* style.css (التصميم الحديث والمصحح - Indigo & Amber) */
+
+/* --- الألوان والمخطط العام (Palette) --- */
+:root {
+    /* الوضع الفاتح الافتراضي */
+    --primary-color: #3F51B5;      /* Indigo */
+    --secondary-color: #FBC02D;    /* Amber */
+    --background-light: #F4F7F9;    /* Light Background */
+    --card-background: #FFFFFF;    /* Card & Modal Background */
+    --text-dark: #2C3E50;          /* Primary Text */
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft Shadow */
+    --footer-height: 50px; 
+    --header-background: var(--card-background);
+    --table-header-bg: #E8EAF6; /* Light Indigo for table header */
+    --border-color: #D1D5DB; /* Light Grey Border */
+    
+    --delete-color: #EF5350; /* Red */
+    --delete-hover: #C62828;
+    --edit-color: var(--secondary-color);
+    --edit-text-color: var(--text-dark);
+}
+
+/* الوضع الداكن (Dark Mode) */
+body.dark-mode {
+    --primary-color: #9FA8DA;      /* Light Indigo */
+    --secondary-color: #FFC107;    /* Amber */
+    --background-light: #1E272E;    /* Dark Background */
+    --card-background: #2D3A44;    /* Dark Card */
+    --text-dark: #ECEFF1;          /* Light Text */
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --header-background: var(--card-background);
+    --table-header-bg: #455A64; /* Darker Blue-Grey */
+    --border-color: #455A64;
+
+    --edit-text-color: var(--text-dark); /* Ensure text on Amber button is readable */
+}
+
+/* --- أساسيات الخط والاتجاه --- */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--background-light); 
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+    direction: rtl; 
+    line-height: 1.6;
+    transition: background-color 0.4s, color 0.4s; 
+}
+
+header {
+    background-color: var(--header-background);
+    color: var(--text-dark);
+    padding: 25px;
+    padding-bottom: 50px; /* مساحة شريط التنقل */
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-bottom: 3px solid var(--primary-color);
+    position: relative; 
+}
+
+header h1 {
+    font-weight: 700;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+/* --- تنسيق شريط المعلومات والتاريخ في الهيدر (الجديد) --- */
+.header-info-bar {
+    position: absolute;
+    top: 25px; 
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 14px;
+    color: #607D8B; 
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: right;
+    z-index: 10;
+}
+
+.info-date {
+    color: var(--text-dark); 
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.info-tasbeeh {
+    color: var(--primary-color); 
+    font-weight: 700;
+    padding: 3px 6px;
+    border-radius: 4px;
+    background-color: var(--background-light);
+    border: 1px solid var(--border-color);
+    transition: all 0.5s ease;
+}
+
+/* --- تنسيق اسم الأستاذ (الستايل الكلاسيكي الرسمي) --- */
+.professor-name {
+    font-weight: 900;              /* خط ثقيل جداً (Ultra Bold) */
+    font-size: 1.15em;             /* أكبر قليلاً من النص المحيط */
+    margin: 0 5px;
+    color: #1A237E; /* أزرق داكن جداً (Deep Indigo) */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); 
+    transition: color 0.3s;
+}
+
+body.dark-mode .professor-name {
+    color: var(--secondary-color); /* استخدام الأصفر لتباين جيد في الوضع الداكن */
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+
+/* تنسيق شريط التنقل */
+.main-nav {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    display: flex;
+    gap: 15px;
+    padding-top: 5px;
+    border-bottom: none;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 700;
+    padding: 10px 15px;
+    border-radius: 8px 8px 0 0;
+    transition: background-color 0.3s, color 0.3s;
+    opacity: 0.8;
+}
+
+.main-nav a:hover {
+    background-color: var(--background-light);
+    opacity: 1;
+}
+
+.main-nav a.active {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+}
+
+body.dark-mode .main-nav a {
+    color: var(--text-dark); 
+}
+
+body.dark-mode .main-nav a.active {
+    background-color: var(--primary-color);
+    color: var(--card-background); 
+}
+
+/* تصميم زر التبديل */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background-color: var(--card-background);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.1s;
+    font-size: 18px;
+    box-shadow: var(--shadow-light);
+}
+
+.theme-toggle:hover {
+    background-color: var(--primary-color);
+    color: var(--card-background);
+}
+
+main {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+    padding-bottom: var(--footer-height); 
+}
+
+/* --- شريط البحث والتحكم --- */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    gap: 20px; 
+}
+
+/* إخفاء زر الإضافة في صفحة الأرشيف والمميزة */
+.archive-view .controls button.add-btn,
+#pageFeatured .controls button.add-btn {
+    display: none;
+}
+
+#searchInput {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-light); 
+    color: var(--text-dark);
+    border-radius: 8px;
+    flex-grow: 1;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+    min-width: 250px;
+}
+.archive-view #searchInput,
+#pageFeatured #searchInput {
+    width: 100%; 
+}
+
+#searchInput:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.2);
+    outline: none;
+}
+
+/* --- الأزرار العصرية --- */
+.action-btn { 
+    background-color: var(--primary-color); 
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    font-size: 16px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.action-btn:hover {
+    background-color: #303F9F;
+}
+
+body.dark-mode .action-btn:hover:not(.theme-toggle) {
+    background-color: var(--primary-color);
+    filter: brightness(1.2); 
+}
+
+/* تنسيق زر الطباعة */
+.print-btn {
+    background-color: #7986cb; 
+    color: white;
+}
+.print-btn:hover {
+    background-color: #5c6bc0;
+}
+
+
+/* --- الجدول الرئيسي --- */
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.cases-table-container {
+    flex: 1; 
+    background-color: var(--card-background);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-light);
+}
+
+.cases-table-container h2 {
+    color: var(--text-dark);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th, td {
+    padding: 15px 18px;
+    text-align: right;
+    font-size: 15px;
+    border-bottom: 1px solid var(--border-color); 
+}
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* *** التعديل لمنع انكسار التاريخ لسطرين (العمود الرابع) *** */
+table tbody tr td:nth-child(4) { 
+    white-space: nowrap;
+}
+
+th {
+    background-color: var(--table-header-bg);
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--primary-color);
+}
+th:last-child {
+    text-align: left; /* لمحاذاة الإجراءات */
+}
+
+tbody tr {
+    transition: background-color 0.3s;
+}
+
+tbody tr:hover {
+    background-color: var(--background-light); 
+    cursor: pointer;
+}
+
+/* ألوان الحالة الحديثة */
+.status-active, .status-pending, .status-closed {
+    font-weight: 700;
+    border-radius: 4px; 
+    padding: 4px 8px; 
+    display: inline-block;
+    text-align: center;
+}
+.status-active { color: #2E7D32; background-color: rgba(76, 175, 80, 0.2); }
+.status-pending { color: #FF6F00; background-color: rgba(255, 152, 0, 0.2); }
+.status-closed { color: #616161; background-color: rgba(158, 158, 158, 0.2); }
+
+/* أزرار الإجراءات داخل الجدول */
+td:last-child {
+    white-space: nowrap; 
+}
+.action-btn-table { 
+    padding: 8px 12px;
+    margin-right: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+.edit-btn { 
+    background-color: #4CAF50; 
+    color: white; 
+}
+.edit-btn:hover { 
+    background-color: #388E3C; 
+}
+.delete-btn { 
+    background-color: var(--delete-color); 
+    color: white; 
+}
+.delete-btn:hover { 
+    background-color: var(--delete-hover); 
+}
+
+/* --- تصميم النوافذ المنبثقة (Popover & Modal) --- */
+.popover {
+    display: none; 
+    position: fixed; 
+    z-index: 101; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7); 
+}
+
+.popover-content {
+    background-color: var(--card-background);
+    margin: 5% auto; 
+    padding: 30px;
+    width: 90%;
+    max-width: 450px; 
+    border-radius: 12px;
+    position: relative;
+    box-shadow: var(--shadow-light); 
+    border-top: 6px solid var(--secondary-color);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-popover {
+    color: var(--text-dark);
+    opacity: 0.7;
+    float: left; 
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.close-popover:hover {
+    color: var(--delete-color);
+}
+
+/* تنسيق لعرض قيمة حالة محددة (يستخدم داخل الـ Popover) */
+.popover-detail-status {
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* 1. ألوان حالة القضية داخل التفاصيل */
+.status-popover-closed {
+    color: #4CAF50; 
+    background-color: rgba(76, 175, 80, 0.1);
+}
+.status-popover-active {
+    color: #2196F3; 
+    background-color: rgba(33, 150, 243, 0.1);
+}
+.status-popover-pending {
+    color: #FF9800; 
+    background-color: rgba(255, 152, 0, 0.1);
+}
+
+/* 2. ألوان حالة السداد داخل التفاصيل */
+.payment-popover-fully_paid {
+    color: #4CAF50; 
+    background-color: rgba(76, 175, 80, 0.1);
+}
+.payment-popover-partially_paid {
+    color: #FFC107; 
+    background-color: rgba(255, 193, 7, 0.1);
+}
+.payment-popover-not_paid {
+    color: #F44336; 
+    background-color: rgba(244, 67, 54, 0.1);
+}
+.payment-popover-not_applicable {
+    color: #607D8B; 
+    background-color: rgba(96, 125, 139, 0.1);
+}
+
+#popoverNotes {
+    white-space: pre-wrap;
+    background-color: var(--background-light);
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 100; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 3% auto; 
+    padding: 30px;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+    border-top: 6px solid var(--primary-color);
+}
+
+.close-modal { 
+    color: var(--text-dark);
+    opacity: 0.7;
+    float: left; 
+    font-size: 35px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+.close-modal:hover {
+    opacity: 1;
+}
+
+#caseForm label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+#caseForm input, #caseForm select, #caseForm textarea {
+    width: 100%; 
+    padding: 12px; 
+    margin-bottom: 15px; 
+    border: 1px solid var(--border-color); 
+    border-radius: 6px; 
+    box-sizing: border-box;
+    font-size: 15px;
+    transition: border-color 0.3s, background-color 0.3s;
+    background-color: var(--background-light); 
+    color: var(--text-dark);
+}
+
+/* تنسيق حقول النموذج في الوضع الداكن */
+body.dark-mode #caseForm input,
+body.dark-mode #caseForm select,
+body.dark-mode #caseForm textarea {
+    background-color: var(--table-header-bg);
+}
+
+/* الأزرار داخل الفورم */
+#caseForm button[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* تغيير لون زر الحفظ/التحديث داخل نموذج التعديل/الإضافة */
+#caseForm button.action-btn {
+    background-color: var(--secondary-color) !important; 
+    color: var(--text-dark) !important; 
+    font-weight: 700;
+}
+
+#caseForm button.action-btn:hover {
+    background-color: #5f4822 !important; 
+}
+
+/* تنسيق حقل التمييز (Checkbox) */
+#isFeatured {
+    width: auto !important;
+    margin-left: 10px;
+    cursor: pointer;
+}
+#caseForm label[for="isFeatured"] {
+    display: inline;
+    margin-right: 10px;
+    font-weight: 400;
+}
+
+
+/* الفوتر (Footer) - الثابت */
+footer.fixed-footer {
+    position: fixed; 
+    bottom: 0;      
+    left: 0;
+    width: 100%;
+    height: var(--footer-height);
+    text-align: center;
+    padding: 15px 0; 
+    background-color: var(--header-background); 
+    color: var(--text-dark);
+    font-size: 14px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+    z-index: 99; 
+}
+
+/* تنسيق اسم المصمم في الفوتر */
+.designer-name {
+    color: var(--secondary-color); 
+    font-weight: 700;              
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: rgba(251, 192, 45, 0.1); 
+    transition: color 0.3s, background-color 0.3s;
+}
+
+body.dark-mode .designer-name {
+    color: var(--secondary-color); 
+    background-color: rgba(255, 193, 7, 0.2); 
+}
+
+
+/* رسالة لا توجد قضايا */
+.no-cases-message {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2em;
+    color: var(--primary-color);
+    background-color: var(--background-light);
+    border-radius: 8px;
+    margin-top: 30px;
+    font-weight: 600;
+}
+
+
+/* --- الاستجابة (Responsive Design) --- */
+@media (max-width: 768px) {
+    .controls {
+        flex-wrap: wrap;
+        padding: 15px;
+        gap: 15px;
+    }
+    #searchInput {
+        order: 2;
+        width: 100%;
+    }
+    .controls button {
+        width: calc(50% - 10px);
+        order: 1;
+    }
+    
+    .theme-toggle {
+        top: 15px;
+        left: 15px;
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .controls button {
+        width: 100%;
+    }
+    .main-nav {
+        gap: 5px;
+        width: 90%;
+    }
+    .main-nav a {
+        padding: 8px 10px;
+        font-size: 14px;
+        flex-grow: 1;
+        text-align: center;
+    }
+    th, td {
+        padding: 10px;
+        font-size: 13px;
+    }
+    
+    /* إخفاء عمود تاريخ الجلسة/الحالة على الشاشات الصغيرة جداً */
+    table thead tr th:nth-child(4), 
+    table tbody tr td:nth-child(4) {
+        display: none;
+    }
+    table thead tr th:nth-child(5), 
+    table tbody tr td:nth-child(5) {
+        display: none; 
+    }
+    .modal-content {
+        margin: 5% auto;
+    }
+    
+    /* Adjustments for theme-toggle position on small screens */
+    header {
+        padding-top: 60px; /* لترك مساحة كافية للعناصر المتحركة */
+        padding-bottom: 50px;
+    }
+    .theme-toggle {
+        top: 15px; 
+        left: 15px;
+        z-index: 11;
+    }
+    .header-info-bar {
+        position: absolute; /* تغيير موضعه ليتناسب مع العنوان في الأعلى */
+        top: 10px;
+        right: 15px;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        width: auto;
+        font-size: 12px;
+    }
+    .info-date {
+        font-size: 1em;
+        margin-left: 10px;
+    }
+}
+
+
+/* --- تنسيقات الطباعة (Print Styles) --- */
+@media print {
+    /* إخفاء عناصر التحكم والأزرار والفوتر غير الضرورية */
+    header, 
+    .main-nav, 
+    .controls, 
+    footer.fixed-footer, 
+    .cases-table td:last-child,
+    .header-info-bar /* إخفاء الأذكار والتاريخ في الطباعة */ 
+    {
+        display: none;
+    }
+
+    /* إظهار محتوى MAIN بالكامل دون هوامش */
+    main {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        min-height: auto;
+    }
+
+    /* إظهار الجدول بالكامل */
+    .cases-table-container {
+        padding: 0;
+        box-shadow: none;
+        background-color: white;
+    }
+
+    /* ********** التعديلات لتنظيم الطباعة ********** */
+    table {
+        font-size: 10pt; 
+    }
+
+    th, td {
+        padding: 7px 10px; 
+        font-size: 10pt; 
+        line-height: 1.2;
+    }
+
+    /* *** التعديل لمنع انكسار التاريخ لسطرين (العمود الرابع) *** */
+    table tbody tr td:nth-child(4) { 
+        white-space: nowrap;
+    }
+
+    /* ضمان ظهور جميع الأعمدة المخفية في وضع الشاشات الصغيرة */
+    @media (max-width: 600px) {
+        table thead tr th:nth-child(4), 
+        table tbody tr td:nth-child(4),
+        table thead tr th:nth-child(5), 
+        table tbody tr td:nth-child(5) {
+            display: table-cell !important;
+        }
+        /* تعديل حجم الخط للطباعة */
+        th, td {
+            font-size: 9pt; 
+            padding: 5px 8px;
+        }
+    }
+    
+    /* جعل العنوان واضحًا في بداية الصفحة */
+    .cases-table-container h2 {
+        display: block !important;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        color: black;
+        font-size: 14pt; 
+    }
+}
+
+/* ================================================= */
+/* استعلامات الوسائط (Responsive Design)     */
+/* ================================================= */
+
+/* ------------------------------------------------ */
+/* 1. الأجهزة اللوحية والهواتف (العرض الأقصى 768 بكسل) */
+/* ------------------------------------------------ */
+@media (max-width: 768px) {
+    
+    /* تضييق الحاوية الرئيسية وإضافة مسافة داخلية */
+    .container {
+        padding: 10px;
+    }
+
+    /* تكبير خط الهيدر ليكون أكثر وضوحاً */
+    header h1 {
+        font-size: 1.5em;
+        margin-bottom: 5px;
+        text-align: right; /* محاذاة لليمين مع اللغة العربية */
+    }
+    
+    /* جعل شريط البحث والأزرار تأخذ عرضاً كاملاً */
+    .search-bar {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    #searchInput, #addButton, #printButton {
+        width: 100%;
+        box-sizing: border-box; 
+    }
+
+    /* تحسين تنسيق شريط التاريخ والأذكار */
+    .header-info-bar {
+        font-size: 0.85em;
+        flex-direction: column;
+        align-items: flex-end; /* محاذاة العناصر لليمين */
+        gap: 5px;
+        padding: 5px;
+    }
+
+    .info-date, .info-tasbeeh {
+        text-align: right;
+        width: 100%;
+    }
+
+    /* تغيير عرض الروابط إلى كتل */
+    .main-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 10px;
+    }
+    .main-nav a {
+        padding: 8px;
+        text-align: center;
+        width: 100%;
+    }
+
+}
+
+/* ------------------------------------------------ */
+/* 2. الهواتف الصغيرة (العرض الأقصى 600 بكسل) */
+/* ------------------------------------------------ */
+@media (max-width: 600px) {
+    /* 📌 تحسين تنسيق الهيدر العلوي */
+    header {
+        /* زيادة التعبئة على اليمين واليسار لتجنب التصاق المحتوى */
+        padding: 10px 10px 10px 60px; 
+    }
+
+    /* 📌 ضبط مكان زر التبديل (Theme Toggle) */
+    .theme-toggle {
+        top: 5px; 
+        left: 5px; 
+        right: auto;
+        padding: 8px; 
+        font-size: 1.1em;
+    }
+    
+    /* 📌 تقليل حجم الخط في الجدول */
+    .cases-table {
+        font-size: 0.85em;
+        min-width: 650px; /* لضمان عرض جميع الأعمدة في سطر واحد */
+    }
+
+    /* جعل الجدول قابلاً للتمرير أفقياً */
+    .cases-table-container {
+        overflow-x: auto;
+        width: 100%;
+        padding-bottom: 15px; /* مسافة للتمرير */
+    }
+    
+    /* لضمان ألا تلتصق الأزرار ببعضها في عمود الإجراءات */
+    .action-btn-table {
+        margin: 2px 0;
+        display: block;
+        width: 95%; /* أوسع قليلاً */
+        padding: 6px;
+    }
+
+    /* تضييق عرض المودال (النماذج والنوافذ المنبثقة) */
+    .modal-content, .popover-content {
+        width: 95%;
+        margin: 5% auto; /* رفعها قليلاً عن أسفل الشاشة */
+        padding: 15px;
+    }
+    
+    /* تحسين تنسيق عناصر النموذج في الهاتف */
+    .form-group label {
+        width: 100%;
+        text-align: right;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

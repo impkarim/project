@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة القضايا - الأرشيف</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body id="pageArchive">
+    <header>
+        <div class="header-info-bar">
+            <div id="currentDateDisplay" class="info-date"></div>
+            <div id="tasbeehDisplay" class="info-tasbeeh"></div>
+        </div>
+<h1>نظام إدارة القضايا القانونية للأستاذ: <span class="professor-name">بن داود براهيم</span></h1>
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">القضايا النشطة</a>
+            <a href="featured.html" class="nav-link">⭐ المميزة</a>
+            <a href="archive.html" class="nav-link active">📦 الأرشيف</a>
+        </nav>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+    </header>
+
+    <main>
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="بحث برقم القضية، الموكل، أو الموضوع..." oninput="searchCases()">
+            <button onclick="printReport()" class="action-btn print-btn">🖨️ طباعة التقرير</button>
+            <button onclick="addNewCase()" class="action-btn add-btn">إضافة قضية جديدة</button>
+        </div>
+
+        <div class="cases-table-container">
+            <h2>القضايا المنتهية (الأرشيف)</h2>
+            
+            <p id="noCasesMessage" class="no-cases-message" style="display:none;">لا توجد قضايا منتهية حالياً في الأرشيف.</p>
+
+            <table class="cases-table">
+                <thead>
+                    <tr>
+                        <th>رقم القضية</th>
+                        <th>اسم الموكل</th>
+                        <th>الموضوع</th>
+                        <th>تاريخ الجلسة</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="casesTbody">
+                    </tbody>
+            </table>
+        </div>
+    </main>
+    
+    <footer class="fixed-footer">
+        <p>&copy; 2024 نظام إدارة القضايا. جميع الحقوق محفوظة. تم التصميم بواسطة: <span class="designer-name">فيلالي كريم</span></p>
+    </footer>
+
+    <div id="caseModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">إضافة قضية جديدة</h2>
+            
+            <form id="caseForm">
+                <input type="hidden" id="caseId">
+                
+                <fieldset>
+                    <legend>البيانات الأساسية</legend>
+                    <label for="number">رقم القضية:</label>
+                    <input type="text" id="number" name="number" required>
+                    
+                    <label for="client">اسم الموكل:</label>
+                    <input type="text" id="client" name="client" required>
+                    
+                    <label for="subject">موضوع القضية (مختصر):</label>
+                    <input type="text" id="subject" name="subject" required>
+                </fieldset>
+
+                <fieldset>
+                    <legend>التواريخ والحالة والملاحظات</legend>
+                    
+                    <label for="nextDate">تاريخ الجلسة القادمة:</label>
+                    <input type="date" id="nextDate" name="nextDate" required>
+                    
+                    <label for="status">حالة القضية:</label>
+                    <select id="status" name="status">
+                        <option value="active">قيد التنفيذ</option>
+                        <option value="pending">مؤجلة/انتظار</option>
+                        <option value="closed">منتهية</option>
+                    </select>
+                    
+                    <label for="notes">ملاحظات مفصلة:</label>
+                    <textarea id="notes" name="notes" rows="4"></textarea>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>التمييز</legend>
+                    <input type="checkbox" id="isFeatured" name="isFeatured" style="width: auto;">
+                    <label for="isFeatured" style="display: inline; margin-right: 10px;">تمييز هذه القضية (قضية ذات أولوية)</label>
+                </fieldset>
+
+                <fieldset class="payment-details">
+                    <legend>تفاصيل السداد والرسوم</legend>
+                    
+                    <label for="paymentStatus">حالة الرسوم القضائية:</label>
+                    <select id="paymentStatus" name="paymentStatus">
+                        <option value="not_paid">لم تُسدد بعد</option>
+                        <option value="partially_paid">سُدد جزء منها</option>
+                        <option value="fully_paid">سُددت بالكامل</option>
+                        <option value="not_applicable">غير مطبقة</option>
+                    </select>
+                </fieldset>
+                
+                <button type="submit" id="saveButton" class="action-btn">حفظ القضية</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="caseDetailsPopover" class="popover">
+        <div class="popover-content">
+            <span class="close-popover" onclick="closePopover()">&times;</span>
+            <h3 id="popoverTitle">تفاصيل القضية</h3>
+            <p><strong>رقم القضية:</strong> <span id="popoverNumber"></span></p>
+            <p><strong>الموضوع:</strong> <span id="popoverSubject"></span></p>
+            <p><strong>تاريخ الجلسة:</strong> <span id="popoverNextDate"></span></p>
+            <p><strong>الحالة:</strong> <span id="popoverStatus"></span></p>
+            
+            <h4 class="detail-header">📜 تفاصيل السداد:</h4>
+            <p><strong>حالة الرسوم:</strong> <span id="popoverPaymentStatus"></span></p>
+            
+            <h4 class="detail-header">📝 الملاحظات:</h4>
+            <p id="popoverNotes"></p>
+            <button class="action-btn-table edit-btn" id="popoverEditButton">تعديل القضية</button>
+        </div>
+    </div>
+    
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
